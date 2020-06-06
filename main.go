@@ -1,21 +1,27 @@
 package main
 
 import (
-	"context"
+	"flag"
 	"fmt"
-	"os"
+	"log"
+	"os/user"
+	"path/filepath"
 
-	"github.com/Xenia101/ytdl"
+	"github.com/kkdai/youtube"
 )
 
 func main() {
-	vid, err := ytdl.GetVideoInfo(context.Background(), "https://www.youtube.com/watch?v=WkVvG4QTO9M")
-	if err != nil {
-		fmt.Println(err)
-		return
+	flag.Parse()
+	log.Println(flag.Args())
+	usr, _ := user.Current()
+	currentDir := fmt.Sprintf("%v/Desktop", usr.HomeDir)
+	log.Println("download to dir=", currentDir)
+	y := youtube.NewYoutube(true)
+	arg := flag.Arg(0)
+	if err := y.DecodeURL(arg); err != nil {
+		fmt.Println("err:", err)
 	}
-
-	file, _ := os.Create(vid.Title + ".mp4")
-	defer file.Close()
-	ytdl.DefaultClient.Download(context.Background(), vid, vid.Formats.Worst(ytdl.FormatResolutionKey)[0], file)
+	if err := y.StartDownload(filepath.Join(currentDir, "dl.mp4")); err != nil {
+		fmt.Println("err:", err)
+	}
 }

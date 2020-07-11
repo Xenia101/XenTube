@@ -2,4 +2,7 @@ module main
 
 go 1.14
 
-require github.com/kkdai/youtube v1.2.1
+require (
+	fyne.io/fyne v1.3.1
+	github.com/rylio/ytdl v0.6.3
+)

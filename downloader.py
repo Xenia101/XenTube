@@ -2,14 +2,34 @@ from typing import *
 from pytube import YouTube
 import os
 
-def dircheck(outpath: str):
-    return os.path.isdir(outpath)
+class ytDownloader:
+    def __init__(self, URL, PATH):
+        if len(URL) is 0 or len(PATH) is 0:
+            raise ValueError("URL or PATH is none")
         
-def download(URL:str, outpath:str):
-    if dircheck(outpath) is True:
+        self.URL :str = URL
+        self.PATH:str = PATH
+        
+        super().__init__()
+        
+    def dircheck(self):
+        return os.path.isdir(self.PATH)
+
+    def dircreate(self):
+        try:
+            os.makedirs(self.PATH)
+        except OSError:
+            print("[Error] Creathing directory : {}".format(self.PATH))
+            return 0
+        
+    def handle(self):
+        if self.dircheck() is True:
+            self.download()
+        else:
+            self.dircreate()
+            self.download()
+        
+    def download(self):
         print("Download..")
-        yt = YouTube(URL)
-        yt.streams.first().download(output_path=outpath)
-    else:
-        print("Path failed..")
-        return 0
+        yt = YouTube(self.URL)
+        yt.streams.first().download(output_path=self.PATH)

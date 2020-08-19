@@ -36,3 +36,5 @@
 https://doc.qt.io/qtforpython/
 
 https://github.com/gmarull/qtmodern
+
+https://python-pytube.readthedocs.io/en/latest/

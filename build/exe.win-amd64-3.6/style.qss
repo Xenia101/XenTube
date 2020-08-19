@@ -1,0 +1,6 @@
+/*
+ * QGroupBox
+ */
+QGroupBox {
+    margin-top: 0px;
+}

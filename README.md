@@ -5,7 +5,7 @@
 </p>
 
 <p align=center>
-<img width="25px" src="./img/youtube.png">
+<img width="25px" src="./img/Youtube.png">
 <span style="font-weight:bold">XenTube</span> that downloads, plays, and collects YouTube videos.
 </p>
 
@@ -36,3 +36,5 @@
 https://doc.qt.io/qtforpython/
 
 https://github.com/gmarull/qtmodern
+
+https://python-pytube.readthedocs.io/en/latest/

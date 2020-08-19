@@ -11,7 +11,7 @@ base = None
 if sys.platform == "win32":
     base = "Win32GUI"
 
-exe = [Executable("main.py", base=base)]
+exe = [Executable("main.py", base=base, icon = "Xentube.ico")]
 
 setup(
     name='Xentube',

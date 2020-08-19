@@ -5,7 +5,7 @@
 </p>
 
 <p align=center>
-<img width="25px" src="./img/youtube.png">
+<img width="25px" src="./img/Youtube.png">
 <span style="font-weight:bold">XenTube</span> that downloads, plays, and collects YouTube videos.
 </p>
 

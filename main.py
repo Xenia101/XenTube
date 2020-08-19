@@ -1,4 +1,3 @@
-from typing import *
 import guiWindow
 import qtmodern.styles
 import qtmodern.windows

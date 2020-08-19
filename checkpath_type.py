@@ -1,3 +1,4 @@
+from typing import *
 import os
 
 class Checking:
@@ -5,8 +6,8 @@ class Checking:
         if len(URL) is 0 or len(PATH) is 0:
             raise ValueError("URL or PATH is none")
         
-        self.URL  = URL
-        self.PATH = PATH
+        self.URL :str = URL
+        self.PATH:str = PATH
         
         super().__init__()
         

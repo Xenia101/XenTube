@@ -35,12 +35,12 @@ class App(QWidget):
     
     def __init__(self):
         super().__init__()
-        self.title  = 'XenTube'
-        self.left   = 100
-        self.top    = 100
-        self.width  = 320
-        self.height = 160
-        self.step   = 0
+        self.title    = 'XenTube'
+        self.left     = 100
+        self.top      = 100
+        self.width    = 320
+        self.height   = 160
+        self.step     = 0
         self.filesize = 0
         
         self.nowplaying = ""
@@ -122,9 +122,11 @@ class App(QWidget):
         
         self.model = QStandardItemModel()
         self.listView.setModel(self.model)
-        for x in os.listdir(self.initpath):
-            item = QStandardItem(x)
-            self.model.appendRow(item)
+        try:
+            for x in os.listdir(self.initpath):
+                item = QStandardItem(x)
+                self.model.appendRow(item)
+        except: pass
         
         self.listView.clicked[QModelIndex].connect(self.onclicked_item)
         
@@ -132,14 +134,14 @@ class App(QWidget):
         listLayout.addWidget(self.listView)
         
         # main Frame
-        windowLayout = QVBoxLayout()
-        windowLayout.setContentsMargins(5, -1, 5, 5)
-        windowLayout.addWidget(self.horizontalGroupBox)
+        self.windowLayout = QVBoxLayout()
+        self.windowLayout.setContentsMargins(5, -1, 5, 5)
+        self.windowLayout.addWidget(self.horizontalGroupBox)
         
-        windowLayout.addLayout(listLayout ) # List  View
-        windowLayout.addLayout(videolayout) # Video View
+        self.windowLayout.addLayout(listLayout ) # List  View
+        self.windowLayout.addLayout(videolayout) # Video View
         
-        self.setLayout(windowLayout)
+        self.setLayout(self.windowLayout)
         
         self.mediaPlayer.setVideoOutput(videoWidget)
         self.mediaPlayer.stateChanged.connect( self.mediaStateChanged)
@@ -196,10 +198,9 @@ class App(QWidget):
     def progress_function(self, stream, chunk, bytes_remaining):
         if self.step >= 100:
             self.timer.stop()
-            self.download_button.setEnabled(True)
+            self.download_button.setEnabled(True)            
             self.step = 0
             self.pbar.setValue(self.step)
-            
             return
         
         self.step = round((1-bytes_remaining/stream.filesize)*100, 3)
@@ -228,12 +229,32 @@ class App(QWidget):
                 try:
                     yt = YouTube(url, on_progress_callback=self.progress_function)
                 except: pass
-                
+                video = yt.streams.first()
+                video.download(output_path=path)
+            else:
+                c.dircreate()
+                try:
+                    yt = YouTube(url, on_progress_callback=self.progress_function)
+                except: pass
                 video = yt.streams.first()
                 video.download(output_path=path)
                 
-                #self.timer.start(100, self)
-                #self.download_button.setEnabled(False)
-            else:
-                c.dircreate()
             self.URLinput.clear()
+            
+            self.model.clear()
+            
+            if len(str(self.initpath)) == 0:
+                try:
+                    for x in os.listdir(path):
+                        item = QStandardItem(x)
+                        self.model.appendRow(item)
+                except: pass
+            else:
+                try:
+                    for x in os.listdir(self.initpath):
+                        item = QStandardItem(x)
+                        self.model.appendRow(item)
+                except: pass
+            
+            self.listView.update()
+            self.windowLayout.update()

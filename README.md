@@ -1,7 +1,7 @@
 # XenTube
 
 <p align=center>
-    <img width="250px" src="./img/info.gif">
+    <img width="250px" src="./img/Xentube.png">
 </p>
 
 <p align=center>
@@ -10,6 +10,10 @@
 </p>
 
 ## Example
+
+<p align=center>
+    <img width="250px" src="./img/info.gif">
+</p>
 
 <p align=center>
     <img width="200px" src="./img/img_1.main.PNG">
